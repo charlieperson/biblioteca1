@@ -1,14 +1,15 @@
 package com.thoughtworks.tw101.biblioteca;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-/**
- * Created by lmarcich on 3/1/17.
- */
 public class Main {
     public static void main(String[] args) {
-        Application application = new Application(System.out, new ArrayList<Book>(), new Library(System.out, new ArrayList<Book>()));
+        ArrayList<Book> books = new ArrayList<Book>();
+        books.add(new Book("whatever", "1996", "hello"));
+        Library library = new Library(System.out, books);
+        Menu menu = new Menu(System.out, library, System.in);
+        Application application = new Application(System.out, library, menu);
         application.start();
     }
 }

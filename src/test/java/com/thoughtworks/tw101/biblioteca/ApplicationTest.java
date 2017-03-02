@@ -4,42 +4,29 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.contains;
 
-
-/**
- * Created by lmarcich on 3/1/17.
- */
 public class ApplicationTest {
 
     private PrintStream printStream;
-    private ArrayList<Book> books;
     private Library library;
+    private Menu menu;
 
     @Before
     public void setUp(){
         printStream = mock(PrintStream.class);
-        books = new ArrayList<Book>();
         library = mock(Library.class);
+        menu = mock(Menu.class);
     }
 
     @Test
     public void shouldPrintWelcomeMessageWhenAppStarts(){
-        Application application = new Application(printStream, new ArrayList<Book>(), library);
+        Application application = new Application(printStream, library, menu);
         application.start();
 
         verify(printStream).println("Welcome to Biblioteca!");
-    }
-
-    @Test
-    public void shouldCallListBooksWhenAppStarts(){
-        Application application = new Application(printStream, new ArrayList<Book>(), library);
-        application.start();
-        verify(library).listBooks();
     }
 
 

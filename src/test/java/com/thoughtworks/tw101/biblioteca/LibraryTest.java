@@ -49,28 +49,5 @@ public class LibraryTest {
         library.listBooks();
         verify(printStream).println(contains("Book1\nBook2"));
     }
-//
-//
-//    @Test
-//    public void shouldIncludeYearPublishedWhenListBooksIsCalled(){
-//        Book b1 = new Book("Book1", "1973", "Dr. Suess");
-//        books.add(b1);
-//        Application application = new Application(printStream, books, library);
-//        application.listBooks();
-//
-//
-//        verify(printStream).println(contains("1973"));
-//    }
-//
-//
-//
-//    @Test
-//    public void shouldIncludeAuthorWhenListBooksIsCalled(){
-//        Book b1 = new Book("Book1", "1973", "Dr. Suess");
-//        books.add(b1);
-//        Application application = new Application(printStream, books, library);
-//        application.listBooks();
-//        verify(printStream).println(contains("Dr. Suess"));
-//    }
 
 }
