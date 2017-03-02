@@ -8,9 +8,7 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-
-        Application application = new Application(System.out, new ArrayList<String>());
+        Application application = new Application(System.out, new ArrayList<Book>(), new Library(System.out, new ArrayList<Book>()));
         application.start();
-        application.listBooks();
     }
 }

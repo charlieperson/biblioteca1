@@ -1,6 +1,7 @@
 package com.thoughtworks.tw101.biblioteca;
 
 import java.io.PrintStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -8,22 +9,17 @@ import java.util.ArrayList;
  */
 public class Application {
     private PrintStream printStream;
-    private ArrayList<String> books;
+    private ArrayList<Book> books;
+    private Library library;
 
-    public Application(PrintStream printStream, ArrayList<String> books) {
+    public Application(PrintStream printStream, ArrayList<Book> books, Library library) {
         this.printStream = printStream;
         this.books = books;
+        this.library = library;
     }
 
     public void start() {
         printStream.println("Welcome to Biblioteca!");
-    }
-
-    public void listBooks() {
-        String bookList = "";
-        for(String book : books){
-            bookList += book + '\n';
-        }
-        printStream.println(bookList);
+        library.listBooks();
     }
 }

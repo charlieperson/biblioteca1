@@ -17,41 +17,31 @@ import static org.mockito.Mockito.contains;
 public class ApplicationTest {
 
     private PrintStream printStream;
+    private ArrayList<Book> books;
+    private Library library;
 
     @Before
     public void setUp(){
         printStream = mock(PrintStream.class);
+        books = new ArrayList<Book>();
+        library = mock(Library.class);
     }
 
     @Test
     public void shouldPrintWelcomeMessageWhenAppStarts(){
-        Application application = new Application(printStream, new ArrayList<String>());
+        Application application = new Application(printStream, new ArrayList<Book>(), library);
         application.start();
 
         verify(printStream).println("Welcome to Biblioteca!");
     }
 
     @Test
-    public void shouldPrintOneBookWhenListBooksIsCalledWithOneBookInTheLibrary(){
-        ArrayList<String> books = new ArrayList<String>();
-        books.add("Book1");
-        Application application = new Application(printStream, books);
-        application.listBooks();
-
-        verify(printStream).println(contains("Book1"));
-
+    public void shouldCallListBooksWhenAppStarts(){
+        Application application = new Application(printStream, new ArrayList<Book>(), library);
+        application.start();
+        verify(library).listBooks();
     }
 
-    @Test
-    public void shouldPrintAllBooksWhenListBooksIsCalledWhenMultipleBooksInTheLibrary(){
-        ArrayList<String> books = new ArrayList<String>();
-        books.add("Book1");
-        books.add("Book2");
-        Application application = new Application(printStream, books);
-        application.listBooks();
 
 
-        verify(printStream).println(contains("Book1\nBook2"));
-
-    }
 }
