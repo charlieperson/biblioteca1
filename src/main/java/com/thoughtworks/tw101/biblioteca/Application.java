@@ -20,8 +20,10 @@ public class Application {
     }
 
     public void listBooks() {
+        String bookList = "";
         for(String book : books){
-            printStream.println(book);
+            bookList += book + '\n';
         }
+        printStream.println(bookList);
     }
 }

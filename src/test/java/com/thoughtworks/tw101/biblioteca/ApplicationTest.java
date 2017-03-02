@@ -43,15 +43,15 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldPrintTwoBooksWhenListBooksIsCalledWithTwoBooksInTheLibrary(){
+    public void shouldPrintAllBooksWhenListBooksIsCalledWhenMultipleBooksInTheLibrary(){
         ArrayList<String> books = new ArrayList<String>();
         books.add("Book1");
         books.add("Book2");
         Application application = new Application(printStream, books);
         application.listBooks();
 
-        for(String book : books){
-            verify(printStream).println(contains(book));
-        }
+
+        verify(printStream).println(contains("Book1\nBook2"));
+
     }
 }
