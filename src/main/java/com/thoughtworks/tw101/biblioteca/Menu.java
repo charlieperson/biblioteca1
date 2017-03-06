@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Menu {
     private PrintStream out;
     private Library library;
-    private Scanner scanner;
     private BufferedReader bufferedReader;
 
     public Menu(PrintStream out, Library library, BufferedReader bufferedReader) {
@@ -19,20 +18,23 @@ public class Menu {
 
     public void chooseOption() throws IOException {
         printOptions();
+        String choice;
 
-        String choice = bufferedReader.readLine();
-        switch(choice) {
-            case "0":
-                return;
+        do {
+            choice = bufferedReader.readLine();
+            switch (choice) {
+                case "0":
+                    return;
 
-            case "1":
-                library.listBooks();
-                break;
+                case "1":
+                    library.listBooks();
+                    break;
 
-            default:
-                out.println("Select a valid option!");
-                break;
-        }
+                default:
+                    out.println("Select a valid option!");
+                    break;
+            }
+        }while(!choice.equals("0"));
     }
 
     private void printOptions() {

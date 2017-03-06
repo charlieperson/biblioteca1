@@ -28,7 +28,7 @@ public class MenuTest {
 
     @Test
     public void shouldDisplayMenuPromptWhenInitiated() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("not important");
+        when(bufferedReader.readLine()).thenReturn("not important", "0");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
         verify(out).println(contains("Options:"));
@@ -36,7 +36,7 @@ public class MenuTest {
 
     @Test
     public void shouldListBooksWhenUserChoosesOption1() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
+        when(bufferedReader.readLine()).thenReturn("1", "0");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
         verify(library).listBooks();
@@ -44,30 +44,19 @@ public class MenuTest {
 
     @Test
     public void shouldReportInvalidInputWhenUserInputIsInvalid() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("bad");
+        when(bufferedReader.readLine()).thenReturn("bad", "0");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
         verify(out).println(startsWith("Select"));
     }
 
-//    @Test
-//    public void shouldPromptUserForInputAfterInvalidInput() {
-//        String userInput = "bad";
-//        ByteArrayInputStream mockInputStream = new ByteArrayInputStream(userInput.getBytes());
-//        System.setIn(mockInputStream);
-//
-//        Menu menu = new Menu(out, library,System.in);
-//        menu.chooseOption();
-//        verify(menu, times(2)).chooseOption();
-//    }
+    @Test
+    public void shouldContinuouslyReceiveInputWhenQuitIsNotChoosen() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("1", "bannana", "0");
 
-//    @Test
-//    public void shouldExitProgramWhenUserChoosesQuitOption(){
-//        String userInput = "0";
-//        ByteArrayInputStream mockInputStream = new ByteArrayInputStream(userInput.getBytes());
-//        System.setIn(mockInputStream);
-//
-//        Menu menu = new Menu(out, library, System.in);
-//        assertEquals(null, menu.chooseOption());
-//    }
+        Menu menu = new Menu(out, library, bufferedReader);
+        menu.chooseOption();
+        verify(library).listBooks();
+        verify(out).println(contains("Select"));
+    }
 }
