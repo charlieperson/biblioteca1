@@ -1,6 +1,7 @@
 package com.thoughtworks.tw101.biblioteca;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.PrintStream;
@@ -24,7 +25,6 @@ public class LibraryTest {
 
     @Before
     public void setUp() {
-
         Book book1 = mock(Book.class);
         Book book2 = mock(Book.class);
         when(book1.stringSummary()).thenReturn("Book1");
@@ -38,7 +38,8 @@ public class LibraryTest {
     public void shouldPrintAllCheckedInBooksWhenListingCheckedInBooks(){
         Library library = new Library(printStream, checkedIn, checkedOut);
         library.listCheckedInBooks();
-        verify(printStream).println(contains("Book1\nBook2"));
+        verify(printStream).println(contains("Book1"));
+        verify(printStream).println(contains("Book2"));
     }
 
     @Test
@@ -77,4 +78,11 @@ public class LibraryTest {
         verify(printStream).println(contains("Library contains no books"));
     }
 
+    @Ignore
+    @Test
+    public void shouldNotifyUserWhenTryingToCheckOutBookThatIsNotAvailable() {
+        Library library = new Library(printStream, checkedIn, checkedOut);
+        library.checkOut("invalid");
+        verify(printStream).println(contains("That book is not available."));
+    }
 }

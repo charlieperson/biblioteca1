@@ -34,6 +34,6 @@ public class Library {
         int desiredIndex = (Integer.parseInt(bookNum) - 1);
         Book book = checkedIn.remove(desiredIndex);
         checkedOut.add(book);
-        printStream.println("Successfully checked out " + book.stringSummary());
+        printStream.println("Thank you! Enjoy the book: " + book.stringSummary());
     }
 }
