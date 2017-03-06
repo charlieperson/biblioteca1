@@ -1,28 +1,30 @@
 package com.thoughtworks.tw101.biblioteca;
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-/**
- * Created by cperson on 3/2/17.
- */
 public class Menu {
     private PrintStream out;
     private Library library;
     private Scanner scanner;
+    private BufferedReader bufferedReader;
 
-    public Menu(PrintStream out, Library library, InputStream inputStream) {
+    public Menu(PrintStream out, Library library, BufferedReader bufferedReader) {
         this.out = out;
         this.library = library;
-        this.scanner = new Scanner(inputStream);
+        this.bufferedReader = bufferedReader;
     }
 
-    public void initiate() {
+    public void chooseOption() throws IOException {
         printOptions();
 
-        String choice = scanner.nextLine();
+        String choice = bufferedReader.readLine();
         switch(choice) {
+            case "0":
+                return;
+
             case "1":
                 library.listBooks();
                 break;

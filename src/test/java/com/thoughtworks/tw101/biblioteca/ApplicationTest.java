@@ -3,6 +3,7 @@ package com.thoughtworks.tw101.biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.mockito.Mockito.mock;
@@ -22,8 +23,8 @@ public class ApplicationTest {
     }
 
     @Test
-    public void shouldPrintWelcomeMessageWhenAppStarts(){
-        Application application = new Application(printStream, library, menu);
+    public void shouldPrintWelcomeMessageWhenAppStarts() throws IOException {
+        Application application = new Application(printStream, menu);
         application.start();
 
         verify(printStream).println("Welcome to Biblioteca!");
