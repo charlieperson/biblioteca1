@@ -28,7 +28,7 @@ public class MenuTest {
 
     @Test
     public void shouldDisplayMenuPromptWhenInitiated() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("not important", "0");
+        when(bufferedReader.readLine()).thenReturn("not important", "Quit");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
         verify(out).println(contains("Options:"));
@@ -36,15 +36,15 @@ public class MenuTest {
 
     @Test
     public void shouldListBooksWhenUserChoosesOption1() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1", "0");
+        when(bufferedReader.readLine()).thenReturn("1", "Quit");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
-        verify(library).listBooks();
+        verify(library).listCheckedInBooks();
     }
 
     @Test
     public void shouldReportInvalidInputWhenUserInputIsInvalid() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("bad", "0");
+        when(bufferedReader.readLine()).thenReturn("bad", "Quit");
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
         verify(out).println(startsWith("Select"));
@@ -52,11 +52,29 @@ public class MenuTest {
 
     @Test
     public void shouldContinuouslyReceiveInputWhenQuitIsNotChoosen() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1", "bannana", "0");
+        when(bufferedReader.readLine()).thenReturn("1", "bannana", "Quit");
 
         Menu menu = new Menu(out, library, bufferedReader);
         menu.chooseOption();
-        verify(library).listBooks();
+        verify(library).listCheckedInBooks();
         verify(out).println(contains("Select"));
     }
+
+    @Test
+    public void shouldAllowCustomerToCheckOutABook() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("2", "1", "Quit");
+        Menu menu = new Menu(out, library, bufferedReader);
+        menu.chooseOption();
+        verify(library).checkOut("1");
+    }
+
+    @Test
+    public void shouldAllowCustomerToCheckOutADifferentBook() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("2", "3", "Quit");
+        Menu menu = new Menu(out, library, bufferedReader);
+        menu.chooseOption();
+        verify(library).checkOut("3");
+    }
+
+
 }

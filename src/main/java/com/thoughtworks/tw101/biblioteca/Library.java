@@ -1,7 +1,7 @@
 package com.thoughtworks.tw101.biblioteca;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lmarcich on 3/2/17.
@@ -9,20 +9,31 @@ import java.util.ArrayList;
 public class Library {
 
     private PrintStream printStream;
-    private ArrayList<Book> books;
+    private List<Book> checkedIn;
+    private List<Book> checkedOut;
 
-    public Library(PrintStream printStream, ArrayList<Book> books) {
+    public Library(PrintStream printStream, List<Book> checkedIn, List<Book> checkedOut) {
         this.printStream = printStream;
-        this.books = books;
+        this.checkedIn = checkedIn;
+        this.checkedOut = checkedOut;
     }
 
-    public void listBooks() {
+    public void listCheckedInBooks() {
+        if(checkedIn.isEmpty()) printStream.println("Library contains no books");
         String bookList = "";
-        for(Book book : books){
-            bookList += book.stringSummary() + "\n";
+        int bookNum = 1;
+        for(Book book : checkedIn){
+            bookList += bookNum + ": " + book.stringSummary() + "\n";
+            bookNum += 1;
         }
         printStream.println(bookList);
     }
 
 
+    public void checkOut(String bookNum) {
+        int desiredIndex = (Integer.parseInt(bookNum) - 1);
+        Book book = checkedIn.remove(desiredIndex);
+        checkedOut.add(book);
+        printStream.println("Successfully checked out " + book.stringSummary());
+    }
 }

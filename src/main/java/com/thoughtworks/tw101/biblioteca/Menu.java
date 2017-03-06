@@ -3,7 +3,6 @@ package com.thoughtworks.tw101.biblioteca;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class Menu {
     private PrintStream out;
@@ -23,22 +22,31 @@ public class Menu {
         do {
             choice = bufferedReader.readLine();
             switch (choice) {
-                case "0":
+                case "Quit":
                     return;
 
                 case "1":
-                    library.listBooks();
+                    library.listCheckedInBooks();
+                    break;
+
+                case "2":
+                    out.println("Which book would you like to check out?");
+                    library.listCheckedInBooks();
+                    String bookNumber = bufferedReader.readLine();
+                    library.checkOut(bookNumber);
                     break;
 
                 default:
                     out.println("Select a valid option!");
                     break;
             }
-        }while(!choice.equals("0"));
+        } while (!choice.equals("Quit"));
     }
 
     private void printOptions() {
         out.println("Options:");
         out.println("1 - List books");
+        out.println("2 - check out book");
+        out.println("Quit - Quits the application");
     }
 }
