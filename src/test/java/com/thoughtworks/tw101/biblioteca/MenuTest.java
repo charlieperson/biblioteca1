@@ -27,7 +27,7 @@ public class MenuTest {
         bufferedReader = mock(BufferedReader.class);
         library = mock(Library.class);
         out = mock(PrintStream.class);
-        choiceToOption = mock(HashMap.class);
+        choiceToOption = new HashMap<>();
     }
 
     @Test
@@ -52,5 +52,15 @@ public class MenuTest {
         Menu menu = new Menu(out, bufferedReader, choiceToOption);
         menu.chooseOption();
         verify(out, times(2)).println(contains("Select"));
+    }
+
+    @Test
+    public void shouldExecuteOptionThatUserChooses() throws IOException {
+        Option mockOption = mock(Option.class);
+        choiceToOption.put("1", mockOption);
+        when(bufferedReader.readLine()).thenReturn("1", "Quit");
+        Menu menu = new Menu(out, bufferedReader, choiceToOption);
+        menu.chooseOption();
+        verify(mockOption).execute();
     }
 }
